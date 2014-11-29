@@ -12,9 +12,9 @@
 Checklist
 -normaliser matrice ok
 -arranger matrice (format) ok
--button pour iterer infini
+-button pour iterer infini ok
 -matrice statistics
--animation de un seul
+-animation de un seul ok
 */
 
 
@@ -77,7 +77,7 @@ function GiveNumber()
         for(var j=0; j<numNodes;j++){
             var newVal = document.getElementById(c).value;
             //on ne veut pas de negatif
-            if(newVal < 0){
+            if(newVal < 0 || !$.isNumeric(newVal)){
                 newVal = 0;
                 document.getElementById(c).value = newVal; //on change la valeur sur la matrice
             }
@@ -179,6 +179,7 @@ function Normaliser()
         temp = 0;
         fraction = 0;
     }
+    
     Associate();
 }
 
@@ -223,6 +224,8 @@ function DoReset(){
             if(i == j){myMatrix.array2D[i][j] = 1;}
         }
     }
+    running = false;
+    document.getElementsByClassName('toggleButton')[0].innerHTML = 'Start';
     ColorReset();
     resetDots();
 }
@@ -341,7 +344,7 @@ function drawDot(n){
 
 function resetDots(){
     for( var z = 0; z < 10; z++){
-        dot = document.getElementById(dots[z].id);
+        dot = document.getElementById('dot1');
         if(dot.classList.contains('pouf')){
                 dot.classList.remove('pouf');
         }
@@ -393,7 +396,7 @@ function removeClass(myDot){
 }
 
 function moveDot(whichDot, position){
-    dot = document.getElementById(dots[whichDot].id);
+    dot = document.getElementById('dot1');
 
     removeClass(dot);
     switch (position){
@@ -423,35 +426,46 @@ function moveDot(whichDot, position){
 }
 
 var previous;
+var running = false;
+
+function Running(){
+    drawDot(previous);
+
+    var newPos;
+    //get new position
+    newPos = RandomDestination(previous);
+    moveDot(0, newPos);
+    previous = newPos;
+    //if it has to run, run in 1000ms
+    if(running)
+        setTimeout( Running, 1000 );
+}
 
 document.getElementsByClassName('toggleButton')[0].onclick = function() {
   resetCircle(10);
-  //resetDots();
-  //if(Evaluate()){
+
     drawCircle(myMatrix.node);
     if(this.innerHTML === 'Start')
     {
+        Normaliser();
         previous = parseInt(RandomStart());
         //console.log(previous);
-      this.innerHTML = 'Next Step';
-
-         moveDot(0, previous);
+        this.innerHTML = 'Stop';
+        //initialize dot
+        moveDot(0, previous);
+        //run the animation
+        running = true;
+        Running();
 
     }
-
-    else if(this.innerHTML === 'Next Step') {
+    //if button says stop, stop the animation
+    else if(this.innerHTML === 'Stop') {
         //this.innerHTML = 'Second Step';
 
+    running = false;
+    //set button to start value
+    this.innerHTML = 'Start';
 
-         drawDot(previous);
-
-        var newPos;
-
-              newPos = RandomDestination(previous);
-              moveDot(0, newPos);
-              previous = newPos;
-     //resetDots();
-    //    setTimeout( resetDots, 1100 );
     }
-  //}
+
 };

@@ -9,7 +9,7 @@
 .circle {
 	border-radius: 50%;
 	width: 50px;
-	height: 50px; 
+	height: 50px;
         background-color :rgba(0,0,255,0);
         position: absolute;
         -webkit-transition: all 0.5s ease-in-out;
@@ -42,23 +42,23 @@
 .dot {
 	border-radius: 50%;
 	width: 20px;
-	height: 20px; 
+	height: 20px;
         background-color:rgba(255,0,0,0);
-        
+
         position: absolute;
-        left:300px; 
+        left:300px;
         top: 25px;
-        
-        -webkit-transition: all 1s ease-in-out;
-    -moz-transition: all 1s ease-in-out;
-    -o-transition: all 1s ease-in-out;
-    -ms-transition: all 1s ease-in-out;
-    transition: all 1s ease-in-out;
+
+        -webkit-transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -o-transition: all 0.5s ease-in-out;
+    -ms-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
 }
 
 .dot.pouf{
     background-color: rgba(0,0,0,1);
-    transition: all 1s ease-in-out;
+    transition: all 0.5s ease-in-out;
 }
 
 .dot.unpouf{
@@ -68,47 +68,47 @@
 
 
 .dot.moveA {
-  left:354px; 
+  left:354px;
  top: 54px;
 }
 .dot.move1 {
-  left:242px; 
+  left:242px;
  top: 65px;
 }
 .dot.move2 {
-  left:342px; 
+  left:342px;
  top: 65px;
 }
 .dot.move3 {
-  left:142px; 
+  left:142px;
  top: 127px;
 }
 .dot.move4 {
-  left:442px; 
+  left:442px;
  top: 127px;
 }
 .dot.move5 {
-  left:92px; 
+  left:92px;
  top: 240px;
 }
 .dot.move6 {
-  left:492px; 
+  left:492px;
  top: 240px;
 }
 .dot.move7 {
-  left:142px; 
+  left:142px;
  top: 353px;
 }
 .dot.move8 {
-  left:442px; 
+  left:442px;
  top: 353px;
 }
 .dot.move9 {
-  left:242px; 
+  left:242px;
  top: 415px;
 }
 .dot.move10 {
-  left:342px; 
+  left:342px;
  top: 415px;
 }
 
@@ -125,7 +125,7 @@
     background-color: #eeeeee;
     display : block ;
 }
-.content 
+.content
 {
     width:604px;
     text-align:middle;
@@ -144,7 +144,7 @@ body {
 	text-align:center;
 }
 
-.myCanvas 
+.myCanvas
 {
 
    border:2px solid;
@@ -206,7 +206,7 @@ body {
 
 .Setup
 {
-	
+
 	margin-left:10px;
 	font-family: Tahoma;
 	font-size: 15px;
