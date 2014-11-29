@@ -10,11 +10,11 @@
 
 /*
 Checklist
--normaliser matrice
--arranger matrice (format)
--button opur iterer infini
+-normaliser matrice ok
+-arranger matrice (format) ok
+-button pour iterer infini
 -matrice statistics
--animation de un seulvdks
+-animation de un seul
 */
 
 
@@ -253,9 +253,10 @@ function CreateTable(){
 
     //add node's value for each column + ugly formatting
     tbody += '<p class="myText">';
-    tbody += '&nbsp&nbsp&nbsp&nbsp 1 ';
+    tbody += '1';
+
     for( var i=1;i<num_cols;i++){
-        tbody += '&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp'+(i+1);
+        tbody += '&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp'+(i+1);
     }
     tbody += ' </p>';
 
