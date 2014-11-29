@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Path Probability Simulation</title>
+        <link rel='stylesheet' type='text/css' href='stylesheet.css'/>
+    </head>
+    
+	<body onload="CreateTable();">
+            <div id="container">
+                <div class="content">
+                       <h1 style="text-align:center">Path Probability Simulation</h1>
+                        <div class="myConfig">
+                            <p class="Setup"> Configuration </p>
+                            <div class="form_div">
+                                    <form class="myForm" NAME="test">
+                                            <p class="myText">Number of nodes: <input id="square" value="1" min="1" max="10" type="number" onChange="OnChangeValue(this.form)"  /> </p>
+                                            <p class="myText">Probability to go from a node(row) to another node(column)</p>
+                                            <div id="tableee"></div> 
+
+
+                                            <!-- <button class="myButton" type="button" onClick="MyShow(this.form)">Resart</button> -->
+                                    </form>
+                                <div id="alert"> </div>
+                            </div>
+
+                            <div class="Data">
+                                    <button class="myButton" type="button" onClick="DoReset()">Reset</button>
+                                    
+                                    <!-- <p id="absolute_error" class="myText"> Absolute Error   :  0 </p> -->
+                            </div>
+                        </div>
+                </div>
+                        
+                <div id="drawing">
+                    <button class='toggleButton' value='Start'>Start</button>
+                   <br><br>
+                   <div class="stage">
+
+                       
+                       <div id='circle1' style="left:227px; top: 50px" class='circle'></div>
+                       <div id='circle2' style="left:327px; top: 50px" class='circle'></div>
+                       <div id='circle3' style="left:127px; top: 112px" class='circle'></div>
+                       <div id='circle4' style="left:427px; top: 112px" class='circle'></div> 
+                       <div id='circle5' style="left:77px; top: 225px" class='circle'></div> 
+                       <div id='circle6' style="left:477px; top: 225px" class='circle'></div>
+                       <div id='circle7' style="left:127px; top: 338px" class='circle'></div>
+                       <div id='circle8' style="left:427px; top: 338px" class='circle'></div>
+                       <div id='circle9' style="left:227px; top: 400px" class='circle'></div> 
+                       <div id='circle10' style="left:327px; top: 400px" class='circle'></div>
+                       
+                       <div id='label1' style="left:220px; top: 45px" class='label'>1</div>
+                       <div id='label2' style="left:320px; top: 45px" class='label'>2</div>
+                       <div id='label3' style="left:120px; top: 107px" class='label'>3</div>
+                       <div id='label4' style="left:420px; top: 107px" class='label'>4</div> 
+                       <div id='label5' style="left:70px; top: 220px" class='label'>5</div> 
+                       <div id='label6' style="left:470px; top: 220px" class='label'>6</div>
+                       <div id='label7' style="left:120px; top: 333px" class='label'>7</div>
+                       <div id='label8' style="left:420px; top: 333px" class='label'>8</div>
+                       <div id='label9' style="left:220px; top: 395px" class='label'>9</div> 
+                       <div id='label10' style="left:320px; top: 395px" class='label'>10</div>
+                       
+                       
+                       <div  id='dot1' class='dot'></div>
+                       <div  id='dot2' class='dot'></div>
+                       <div  id='dot3' class='dot'></div>
+                       <div  id='dot4' class='dot'></div>
+                       <div  id='dot5' class='dot'></div>
+                       <div  id='dot6' class='dot'></div>
+                       <div  id='dot7' class='dot'></div>
+                       <div  id='dot8' class='dot'></div>
+                       <div  id='dot9' class='dot'></div>
+                       <div  id='dot10' class='dot'></div>
+                       
+                   </div>
+
+                   <script src="http://code.jquery.com/jquery-2.0.0.js"></script>
+                   <script type='text/javascript' src='script.js'></script>
+                </div> 
+            </div>       
+
+	</body>
+	
+</html>
