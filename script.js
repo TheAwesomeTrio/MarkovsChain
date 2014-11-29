@@ -186,20 +186,23 @@ function Normaliser()
 function RandomDestination(startValue){
 
     var topValue = 0;
-
+    //get max value by summing a line of matrix
     console.log("node "+ myMatrix.node);
     for(var j = 0; j < myMatrix.node; j++){
         topValue += parseFloat(myMatrix.array2D[startValue][j]);
     }
     console.log("topValue "+topValue);
+
     var temp = 0;
     var i = 0;
     var chose = false;
-    var randomNb = Math.floor((Math.random() * topValue) + 1);
+    //get a random number in range of top value (0 to 1)
+    var randomNb = (Math.random() * topValue);
     console.log("random1 "+myMatrix.array2D[startValue][0]);
+
     while(!chose&&i<=10){
         temp += parseFloat(myMatrix.array2D[startValue][i]);
-        console.log("temp : "+temp);
+        //console.log("temp : "+temp);
         if(randomNb <= temp){
             chose = true;
             //call animmation, start = startValue and destination = i
@@ -328,7 +331,7 @@ function resetCircle(n){
 
 var dots = document.getElementsByClassName('dot');
 function drawDot(n){
-    dot = document.getElementById(dots[n].id);
+    dot = document.getElementById('dot1');
     if(dot.classList.contains('unpouf')){
         dot.classList.remove('unpouf');
     }
@@ -418,37 +421,36 @@ function moveDot(whichDot, position){
     //dot.classList.add('pouf');
 }
 
-
+var previous;
 
 document.getElementsByClassName('toggleButton')[0].onclick = function() {
   resetCircle(10);
-  resetDots();
+  //resetDots();
   //if(Evaluate()){
     drawCircle(myMatrix.node);
     if(this.innerHTML === 'Start')
     {
+        previous = parseInt(RandomStart());
+        //console.log(previous);
       this.innerHTML = 'Next Step';
-       for(var z = 0; z<myMatrix.node ; z++)
-       {
-         moveDot(z, z);
-       }
+
+         moveDot(0, previous);
+
     }
 
     else if(this.innerHTML === 'Next Step') {
         //this.innerHTML = 'Second Step';
 
-      for(var z = 0; z<myMatrix.node ; z++)
-      {
-         drawDot(z);
-      }
+
+         drawDot(previous);
+
         var newPos;
-         for(var z = 0; z<myMatrix.node ; z++)
-          {
-              newPos = RandomDestination(z);
-              moveDot(z, newPos);
-          }
+
+              newPos = RandomDestination(previous);
+              moveDot(0, newPos);
+              previous = newPos;
      //resetDots();
-        setTimeout( resetDots, 1100 );
+    //    setTimeout( resetDots, 1100 );
     }
   //}
 };
