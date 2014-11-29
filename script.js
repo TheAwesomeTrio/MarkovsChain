@@ -154,6 +154,34 @@ function RandomStart(){
     return (Math.random()*100)%myMatrix.node;
 }
 
+//La fonction normaliser
+function Normaliser()
+{
+    var temp = 0;
+    var fraction = 0.0;
+    //Pour chaque ligne
+    for(var i = 0; i < myMatrix.node; i++)
+    {
+        //On trouve la somme totale de la ligne
+        for(var j = 0; j < myMatrix.node; j++)
+        {
+            temp += parseFloat(myMatrix.array2D[i][j]);
+        }
+
+        //on modifie chaque case a sa valeur sur la somme totale
+        for(var j = 0; j < myMatrix.node; j++)
+        {
+            fraction = ((parseFloat(myMatrix.array2D[i][j])) / temp);
+            myMatrix.array2D[i][j] = fraction;
+        }
+
+        //Reset les variables
+        temp = 0;
+        fraction = 0;
+    }
+    Associate();
+}
+
 //choisir une colonne (destination)
 function RandomDestination(startValue){
 
