@@ -1,14 +1,21 @@
 /*******************************
- * 
- * Title : Path Probability Simulation 
+ *
+ * Title : Path Probability Simulation
  * Author : Mia Godet, Ylan Luu, David Binh Quang Tran
  * Date: 10/10/2014
- * 
+ *
  * For MTH2302D at PolyTechnique de Montreal
- * 
+ *
  ********************************/
 
-
+/*
+Checklist
+-normaliser matrice
+-arranger matrice (format)
+-button opur iterer infini
+-matrice statistics
+-animation de un seulvdks
+*/
 
 
 var positionOfTable = 0;
@@ -18,7 +25,7 @@ var myMatrix;
 function OnChangeValue( frm )
 {
         this.node = parseInt(document.getElementById("square").value);
-        CreateTable(); 	
+        CreateTable();
 }
 
 //Quand on change la valeur dans la matrice, ca change la matrice interne
@@ -85,9 +92,9 @@ function Evaluate(){
     var valid = true;
     var temp = 0;
     var alertText = '';
-    
+
     ColorReset();
-    
+
     //Verification de chaque ligne
     for(var i = 0; i < myMatrix.node; i++)
     {
@@ -95,7 +102,7 @@ function Evaluate(){
         {
             temp += parseInt(myMatrix.array2D[i][j]);
         }
-        
+
         //Si la somme des valeurs de la ligne n'egale pas 100
         if(parseInt(temp) !== 100)
         {
@@ -103,13 +110,13 @@ function Evaluate(){
             //Mettre en rouge la ligne
             for(var j = 0; j < myMatrix.node; j++)
             {
-                document.getElementById(i*myMatrix.node+j).style.backgroundColor = "#b8435b"; 
+                document.getElementById(i*myMatrix.node+j).style.backgroundColor = "#b8435b";
             }
         }
         //Reset la somme
         temp = 0;
     }
-    
+
     //Verification de chaque colonne
     for(var i = 0; i < myMatrix.node; i++)
     {
@@ -117,7 +124,7 @@ function Evaluate(){
         {
             temp += parseInt(myMatrix.array2D[j][i]);
         }
-        
+
         //Si la somme des valeurs de la colonne n'egale pas 100
         if(parseInt(temp) !== 100)
         {
@@ -125,20 +132,20 @@ function Evaluate(){
             //Mettre en rouge la colonne
             for(var j = 0; j < myMatrix.node; j++)
             {
-                document.getElementById(i+j*myMatrix.node).style.backgroundColor = "#b8435b"; 
+                document.getElementById(i+j*myMatrix.node).style.backgroundColor = "#b8435b";
             }
         }
         //Reset la somme
         temp = 0;
     }
-    
+
     //S'il y a eu une colonne/ligne dont la somme n'égale pas 100
     if(!valid)
     {
-        alertText += ' <p class="myText" > The sum of one or more lines or columns is not exactly 100. </p> '; 
+        alertText += ' <p class="myText" > The sum of one or more lines or columns is not exactly 100. </p> ';
     }
     document.getElementById("alert").innerHTML = alertText;
-    
+
     return valid;
 }
 
@@ -149,12 +156,12 @@ function RandomStart(){
 
 //choisir une colonne (destination)
 function RandomDestination(startValue){
-    
+
     var topValue = 0;
-    
+
     console.log("node "+ myMatrix.node);
     for(var j = 0; j < myMatrix.node; j++){
-        topValue += parseFloat(myMatrix.array2D[startValue][j]);     
+        topValue += parseFloat(myMatrix.array2D[startValue][j]);
     }
     console.log("topValue "+topValue);
     var temp = 0;
@@ -200,22 +207,22 @@ function ColorReset(){
 
 //Creer la table en HTML
 function CreateTable(){
-    
+
     var numNodes = parseInt(document.getElementById("square").value);
     //make sure numNodes is ]0,10]
     if (numNodes >= 10){numNodes = 10;}
     else if( numNodes > 0){}
     else{numNodes = 1;}
-    
+
     myMatrix = new TheMatrice(numNodes);
-    
+
     document.getElementById("square").value = parseInt(numNodes);//show change for clarity to user
-    
+
     var num_rows = numNodes;
     var num_cols = numNodes;
     var theader = '<table border="1">\n';
     var tbody = '';
-    
+
     //add node's value for each column + ugly formatting
     tbody += '<p class="myText">';
     tbody += '&nbsp&nbsp&nbsp&nbsp 1 ';
@@ -223,7 +230,7 @@ function CreateTable(){
         tbody += '&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp'+(i+1);
     }
     tbody += ' </p>';
-    
+
     //generates code as:
     //<input id='table'+positionOfTable type="text" size="1" value=positionOfTable><br>
     //each cell will have id = "X" where X is the value of the position
@@ -233,7 +240,7 @@ function CreateTable(){
         tbody += ' <p class="myText">'+(i+1);
         if(i<9){
             tbody += '&nbsp&nbsp';
-        }        
+        }
         //add cells
         for( var j=0; j<num_cols;j++)
         {
@@ -265,7 +272,7 @@ function drawCircle(n){
             circle.classList.remove('unpouf');
         }
         circle.classList.add('pouf');
-        
+
         label = document.getElementById(labels[i].id);
         if(label.classList.contains('unpouf')){
             label.classList.remove('unpouf');
@@ -282,7 +289,7 @@ function resetCircle(n){
             circle.classList.remove('pouf');
         }
         circle.classList.add('unpouf');
-        
+
         label = document.getElementById(labels[i].id);
         if(label.classList.contains('pouf')){
             label.classList.remove('pouf');
@@ -326,36 +333,36 @@ function removeClass(myDot){
    }
    if(myDot.classList.contains('move2')){
         myDot.classList.remove('move2');
-   } 
+   }
    if(myDot.classList.contains('move3')){
         myDot.classList.remove('move3');
-   } 
+   }
    if(myDot.classList.contains('move4')){
         myDot.classList.remove('move4');
-   } 
+   }
    if(myDot.classList.contains('move5')){
         myDot.classList.remove('move5');
-   } 
+   }
    if(myDot.classList.contains('move6')){
         myDot.classList.remove('move6');
-   } 
+   }
    if(myDot.classList.contains('move7')){
         myDot.classList.remove('move7');
-   } 
+   }
    if(myDot.classList.contains('move8')){
         myDot.classList.remove('move8');
-   } 
+   }
    if(myDot.classList.contains('move9')){
         myDot.classList.remove('move9');
-   } 
+   }
    if(myDot.classList.contains('move10')){
         myDot.classList.remove('move10');
-   } 
+   }
 }
 
 function moveDot(whichDot, position){
     dot = document.getElementById(dots[whichDot].id);
-    
+
     removeClass(dot);
     switch (position){
             case 0 : dot.classList.add('move1');
@@ -385,13 +392,13 @@ function moveDot(whichDot, position){
 
 
 
-document.getElementsByClassName('toggleButton')[0].onclick = function() { 
-  resetCircle(10);  
+document.getElementsByClassName('toggleButton')[0].onclick = function() {
+  resetCircle(10);
   resetDots();
   //if(Evaluate()){
     drawCircle(myMatrix.node);
-    if(this.innerHTML === 'Start') 
-    { 
+    if(this.innerHTML === 'Start')
+    {
       this.innerHTML = 'Next Step';
        for(var z = 0; z<myMatrix.node ; z++)
        {
@@ -401,7 +408,7 @@ document.getElementsByClassName('toggleButton')[0].onclick = function() {
 
     else if(this.innerHTML === 'Next Step') {
         //this.innerHTML = 'Second Step';
-      
+
       for(var z = 0; z<myMatrix.node ; z++)
       {
          drawDot(z);
@@ -413,10 +420,7 @@ document.getElementsByClassName('toggleButton')[0].onclick = function() {
               moveDot(z, newPos);
           }
      //resetDots();
-        setTimeout( resetDots, 1100 );     
+        setTimeout( resetDots, 1100 );
     }
   //}
 };
-
-
-
