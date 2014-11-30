@@ -460,7 +460,7 @@ function Running(){
     //get new position
     newPos = RandomDestination(previous);
     console.log("next node:"+newPos);
-    moveDot(0, newPos-1);
+    moveDot(0, newPos);
     previous = newPos;
 
 
@@ -482,11 +482,11 @@ document.getElementsByClassName('toggleButton')[0].onclick = function() {
     if(this.innerHTML === 'Start')
     {
         Normaliser();
-        previous = parseInt(document.getElementById("startingNode").value);
+        previous = parseInt(document.getElementById("startingNode").value)-1;
         console.log("start:" + previous);
         this.innerHTML = 'Stop';
         //initialize dot
-        moveDot(0, previous-1);
+        moveDot(0, previous);
         //run the animation
         running = true;
         secBetweenIt = 1000/parseInt($("#slider").slider( "value" ));
