@@ -455,17 +455,18 @@ var running = false;
 var secBetweenIt;
 function Running(){
     drawDot(previous);
-    console.log("current node: "+previous);
+    //console.log("current node: "+previous);
     var newPos;
     //get new position
     newPos = RandomDestination(previous);
-    console.log("next node:"+newPos);
+    //console.log("next node:"+newPos);
+    //move
     moveDot(0, newPos);
     previous = newPos;
 
 
 
-    //if it has to run, run in 1000ms
+    //if it has to run again
     if(running){
         setTimeout( Running, secBetweenIt );
         $( "#slider" ).slider({ disabled: true });
@@ -482,6 +483,7 @@ document.getElementsByClassName('toggleButton')[0].onclick = function() {
     if(this.innerHTML === 'Start')
     {
         Normaliser();
+        //get start position
         previous = parseInt(document.getElementById("startingNode").value)-1;
         console.log("start:" + previous);
         this.innerHTML = 'Stop';
