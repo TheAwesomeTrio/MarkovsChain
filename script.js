@@ -26,6 +26,22 @@ function OnChangeValue( frm )
 {
         this.node = parseInt(document.getElementById("square").value);
         CreateTable();
+        CreateStatsTable();
+}
+
+//force the content into number only
+function OnlyNum(frm)
+{
+    var newVal = parseInt(document.getElementById("startingNode").value);
+    //if invalid or negative
+    if(newVal < 1 || newVal > this.node || !$.isNumeric(newVal)){
+        newVal = 1;
+        document.getElementById("startingNode").value = newVal;
+    }
+}
+
+function start(){
+
 }
 
 //Quand on change la valeur dans la matrice, ca change la matrice interne
@@ -179,7 +195,7 @@ function Normaliser()
         temp = 0;
         fraction = 0;
     }
-    
+
     Associate();
 }
 
@@ -188,18 +204,18 @@ function RandomDestination(startValue){
 
     var topValue = 0;
     //get max value by summing a line of matrix
-    console.log("node "+ myMatrix.node);
+    //console.log("node "+ myMatrix.node);
     for(var j = 0; j < myMatrix.node; j++){
         topValue += parseFloat(myMatrix.array2D[startValue][j]);
     }
-    console.log("topValue "+topValue);
+    //console.log("topValue "+topValue);
 
     var temp = 0;
     var i = 0;
     var chose = false;
     //get a random number in range of top value (0 to 1)
     var randomNb = (Math.random() * topValue);
-    console.log("random1 "+myMatrix.array2D[startValue][0]);
+    //console.log("random1 "+myMatrix.array2D[startValue][0]);
 
     while(!chose&&i<=10){
         temp += parseFloat(myMatrix.array2D[startValue][i]);
@@ -212,7 +228,7 @@ function RandomDestination(startValue){
             i++;
         }
     }
-    console.log("i : "+i);
+    //console.log("i : "+i);
     return i;
 }
 
@@ -228,6 +244,7 @@ function DoReset(){
     document.getElementsByClassName('toggleButton')[0].innerHTML = 'Start';
     ColorReset();
     resetDots();
+    CreateStatsTable();
 }
 
 //reset la couleur des cases
@@ -241,6 +258,12 @@ function ColorReset(){
 
 //Creer la table en HTML
 function CreateTable(){
+    $(function() {
+        $( "#slider" ).slider();
+        $( "#slider" ).slider( "option", "min", 1 );    //min value
+        $( "#slider" ).slider( "option", "max", 100 );   //max value
+        $( "#slider" ).slider( "value" , 1);            //default value
+    });
 
     var numNodes = parseInt(document.getElementById("square").value);
     //make sure numNodes is ]0,10]
@@ -293,6 +316,7 @@ function CreateTable(){
     document.getElementById('tableee').innerHTML = theader + tbody + tfooter;
     //reset values in table
     DoReset();
+    CreateStatsTable();
 }
 
 
@@ -396,6 +420,7 @@ function removeClass(myDot){
 }
 
 function moveDot(whichDot, position){
+    setStatsTable(position);
     dot = document.getElementById('dot1');
 
     removeClass(dot);
@@ -427,20 +452,29 @@ function moveDot(whichDot, position){
 
 var previous;
 var running = false;
-
+var secBetweenIt;
 function Running(){
     drawDot(previous);
-
+    console.log("current node: "+previous);
     var newPos;
     //get new position
     newPos = RandomDestination(previous);
-    moveDot(0, newPos);
+    console.log("next node:"+newPos);
+    moveDot(0, newPos-1);
     previous = newPos;
+
+
+
     //if it has to run, run in 1000ms
-    if(running)
-        setTimeout( Running, 1000 );
+    if(running){
+        setTimeout( Running, secBetweenIt );
+        $( "#slider" ).slider({ disabled: true });
+    }else{
+        $( "#slider" ).slider({ disabled: false });
+    }
 }
 
+//when clicking on start button
 document.getElementsByClassName('toggleButton')[0].onclick = function() {
   resetCircle(10);
 
@@ -448,13 +482,15 @@ document.getElementsByClassName('toggleButton')[0].onclick = function() {
     if(this.innerHTML === 'Start')
     {
         Normaliser();
-        previous = parseInt(RandomStart());
-        //console.log(previous);
+        previous = parseInt(document.getElementById("startingNode").value);
+        console.log("start:" + previous);
         this.innerHTML = 'Stop';
         //initialize dot
-        moveDot(0, previous);
+        moveDot(0, previous-1);
         //run the animation
         running = true;
+        secBetweenIt = 1000/parseInt($("#slider").slider( "value" ));
+
         Running();
 
     }
@@ -462,10 +498,144 @@ document.getElementsByClassName('toggleButton')[0].onclick = function() {
     else if(this.innerHTML === 'Stop') {
         //this.innerHTML = 'Second Step';
 
-    running = false;
-    //set button to start value
-    this.innerHTML = 'Start';
+        running = false;
+        //set button to start value
+        this.innerHTML = 'Start';
 
     }
+
+}
+
+//called when the slider changes value
+$( "#slider" ).slider({
+  change: function( event, ui ) {
+      //prendre la valeur du slider et l'appliquer au zoom
+      var value = $( "#slider" ).slider( "value" );
+      document.getElementById('speed').innerHTML = value;
+  }
+});
+
+  var myArray  = new Array();
+
+//get value into %
+function getPercent(){
+    var percent = new Array
+    for (var i = 0; i<10; i++)
+    {
+        percent[i] = myArray[i];
+    }
+    var sum=0;
+
+    for (var i = 0; i<10; i++)
+    {
+       /* if (percent[i] === 0)
+        {
+            sum = parseInt(sum + 1);
+        }
+        else*/{
+            sum += parseFloat(percent[i]);
+        }
+    }
+    for (var i = 0; i<10; i++)
+    {
+        percent[i] = Math.round((percent[i]/sum*100) * 100) / 100;
+    }
+
+    return percent;
+
+}
+ function clearArray(){
+
+    myArray[0] = 0;
+    myArray[1] = 0;
+    myArray[2] = 0;
+    myArray[3] = 0;
+    myArray[4] = 0;
+    myArray[5] = 0;
+    myArray[6] = 0;
+    myArray[7] = 0;
+    myArray[8] = 0;
+    myArray[9] = 0;
+    return myArray;
+ }
+function CreateStatsTable(){
+
+    clearArray();
+
+    var myTable= "<table><tr><td style='width: 100px; color: red;'>Node</td>";
+    myTable+= "<td style='width: 100px; color: red; text-align: right;'>n of visits</td>";
+    myTable+="<td style='width: 100px; color: red; text-align: right;'>% of visits</td></tr>";
+
+    myTable+="<tr><td style='width: 100px;                   '>---------------</td>";
+    myTable+="<td     style='width: 100px; text-align: right;'>---------------</td>";
+    myTable+="<td     style='width: 100px; text-align: right;'>---------------</td></tr>";
+
+    //list all labels
+    for (var i=0; i<10; i++) {
+        myTable+="<tr><td style='width: 100px;'> "+ (i+1) + " :</td>";
+        myTable+="<td style='width: 100px; text-align: right;'>" + myArray[i] + "</td>";
+        myTable+="<td style='width: 100px; text-align: right;'>" + myArray[i] + " %</td></tr>";
+    }
+
+    myTable+="<tr><td style='width: 100px;                   '>---------------</td>";
+    myTable+="<td     style='width: 100px; text-align: right;'>---------------</td>";
+    myTable+="<td     style='width: 100px; text-align: right;'>---------------</td></tr>";
+
+    var sum=0.0;
+    for (var i=0;i <10;i++)
+    {
+        sum += parseFloat(myArray[i]);
+    }
+
+    myTable+= "<table><tr><td style='width: 100px; color: blue;'>Total</td>";
+    myTable+="<td style='width: 100px; text-align: right; color : blue;'>" + (sum) + "</td>";
+    myTable+="<td style='width: 100px; text-align: right; color: blue;'>" + (sum) + " %</td></tr>";
+
+   myTable+="</table>";
+
+    document.getElementById('tablePrint').innerHTML = myTable;
+
+
+}
+
+function setStatsTable(dot){
+    myArray[dot]+=1;
+    var percent = getPercent();
+
+
+    var myTable= "<table><tr><td style='width: 100px; color: red;'>Node</td>";
+    myTable+= "<td style='width: 100px; color: red; text-align: right;'>n of visits</td>";
+    myTable+="<td style='width: 100px; color: red; text-align: right;'>% of visits</td></tr>";
+
+    myTable+="<tr><td style='width: 100px;                   '>---------------</td>";
+    myTable+="<td     style='width: 100px; text-align: right;'>---------------</td>";
+    myTable+="<td     style='width: 100px; text-align: right;'>---------------</td></tr>";
+
+    for (var i=0; i<10; i++) {
+        myTable+="<tr><td style='width: 100px;'> "+ (i+1) + " :</td>";
+        myTable+="<td style='width: 100px; text-align: right;'>" + myArray[i] + "</td>";
+        myTable+="<td style='width: 100px; text-align: right;'>" + percent[i] + " %</td></tr>";
+    }
+
+    myTable+="<tr><td style='width: 100px;                   '>---------------</td>";
+    myTable+="<td     style='width: 100px; text-align: right;'>---------------</td>";
+    myTable+="<td     style='width: 100px; text-align: right;'>---------------</td></tr>";
+
+    var sum=0.0;
+    var perSum = 0;
+    for (var i=0;i <10;i++)
+    {
+        sum += parseFloat(myArray[i]);
+        perSum += parseFloat(percent[i]);
+    }
+
+    myTable+= "<table><tr><td style='width: 100px; color: blue;'>Total</td>";
+    myTable+="<td style='width: 100px; text-align: right; color : blue;'>" + (sum) + "</td>";
+    myTable+="<td style='width: 100px; text-align: right; color: blue;'>" + parseInt(perSum) + " %</td></tr>";
+
+   myTable+="</table>";
+
+    document.getElementById('tablePrint').innerHTML = myTable;
+
 
 };
