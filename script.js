@@ -241,7 +241,13 @@ function DoReset(){
         }
     }
     running = false;
-    document.getElementsByClassName('toggleButton')[0].innerHTML = 'Start';
+    var start;
+    if(document.getElementById('lang').innerHTML == 0){
+        start = 'Commencer';
+    }else{
+        start = 'Start';
+    }
+    document.getElementsByClassName('toggleButton')[0].innerHTML = start;
     ColorReset();
     resetDots();
     CreateStatsTable();
@@ -478,15 +484,25 @@ function Running(){
 //when clicking on start button
 document.getElementsByClassName('toggleButton')[0].onclick = function() {
   resetCircle(10);
+  var start, stop;
+  if(document.getElementById('lang').innerHTML == 0){
+      start = 'Commencer';
+      stop = 'Arret';
+  }else{
+      start = 'Start';
+      stop = 'Stop';
+  }
+
 
     drawCircle(myMatrix.node);
-    if(this.innerHTML === 'Start')
+    console.log(this.innerHTML);
+    if(this.innerHTML == start)
     {
         Normaliser();
         //get start position
         previous = parseInt(document.getElementById("startingNode").value)-1;
         console.log("start:" + previous);
-        this.innerHTML = 'Stop';
+        this.innerHTML = stop;
         //initialize dot
         moveDot(0, previous);
         //run the animation
@@ -497,12 +513,12 @@ document.getElementsByClassName('toggleButton')[0].onclick = function() {
 
     }
     //if button says stop, stop the animation
-    else if(this.innerHTML === 'Stop') {
+    else if(this.innerHTML == stop) {
         //this.innerHTML = 'Second Step';
 
         running = false;
         //set button to start value
-        this.innerHTML = 'Start';
+        this.innerHTML = start;
 
     }
 
@@ -563,10 +579,23 @@ function getPercent(){
 function CreateStatsTable(){
 
     clearArray();
+    var node;
+    var nvisit;
+    var percentvisit;
+    if(document.getElementById('lang').innerHTML == 0){
+        node = "Noeud";
+        nvisit = "Nombre de visites";
+        percentvisit = "% de visites";
+    }else{
+        node = "Node";
+        nvisit = "Number of visits";
+        percentvisit = "% of visits";
+    }
 
-    var myTable= "<table><tr><td style='width: 100px; color: red;'>Node</td>";
-    myTable+= "<td style='width: 100px; color: red; text-align: right;'>n of visits</td>";
-    myTable+="<td style='width: 100px; color: red; text-align: right;'>% of visits</td></tr>";
+
+    var myTable= "<table><tr><td style='width: 100px; color: red;'>"+node+"</td>";//node
+    myTable+= "<td style='width: 100px; color: red; text-align: right;'>"+nvisit+"</td>";//nvisit
+    myTable+="<td style='width: 100px; color: red; text-align: right;'>"+percentvisit+"</td></tr>";//percentvisit
 
     myTable+="<tr><td style='width: 100px;                   '>---------------</td>";
     myTable+="<td     style='width: 100px; text-align: right;'>---------------</td>";
@@ -603,11 +632,22 @@ function CreateStatsTable(){
 function setStatsTable(dot){
     myArray[dot]+=1;
     var percent = getPercent();
+    var node;
+    var nvisit;
+    var percentvisit;
+    if(document.getElementById('lang').innerHTML == 0){
+        node = "Noeud";
+        nvisit = "Nombre de visites";
+        percentvisit = "% de visites";
+    }else{
+        node = "Node";
+        nvisit = "Number of visits";
+        percentvisit = "% of visits";
+    }
 
-
-    var myTable= "<table><tr><td style='width: 100px; color: red;'>Node</td>";
-    myTable+= "<td style='width: 100px; color: red; text-align: right;'>n of visits</td>";
-    myTable+="<td style='width: 100px; color: red; text-align: right;'>% of visits</td></tr>";
+    var myTable= "<table><tr><td style='width: 100px; color: red;'>"+node+"</td>";
+    myTable+= "<td style='width: 100px; color: red; text-align: right;'>"+nvisit+"</td>";
+    myTable+="<td style='width: 100px; color: red; text-align: right;'>"+percentvisit+"</td></tr>";
 
     myTable+="<tr><td style='width: 100px;                   '>---------------</td>";
     myTable+="<td     style='width: 100px; text-align: right;'>---------------</td>";
